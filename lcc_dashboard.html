@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Light of Life CMS</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Arial, sans-serif;
+  background: #eef1f5;
+  color: #111;
+  min-height: 100vh;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  min-width: 240px;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.logo-block {
+  background: #1b5e20;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+  color: #fff;
+}
+
+.logo-block .logo-img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.logo-block .cross {
+  font-size: 32px;
+  margin-bottom: 4px;
+}
+
+.logo-block h2 {
+  font-size: 15px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.logo-block p {
+  font-size: 12px;
+  opacity: 0.75;
+  margin: 0;
+}
+
+.stat-card {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.stat-card .label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.stat-card .value {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.stat-card .sub {
+  font-size: 12px;
+  color: #666;
+  margin-top: 2px;
+}
+
+.ministry-stats {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 12px 14px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.ministry-stats h4 {
+  font-size: 13px;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.min-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  padding: 4px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.min-row:last-child { border-bottom: none; }
+
+.min-badge {
+  background: #e8f5e9;
+  color: #1b5e20;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 2px 8px;
+}
+
+/* NAV TABS */
+.nav-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 0;
+  margin-bottom: 4px;
+}
+
+.nav-tab {
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #888;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  border-radius: 4px 4px 0 0;
+  transition: color 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-tab:hover { color: #1b5e20; background: #f0f7f0; }
+
+.nav-tab.active {
+  color: #1b5e20;
+  border-bottom: 3px solid #1b5e20;
+  background: #f0f7f0;
+}
+
+/* PAGE SECTIONS */
+.page-section { display: none; }
+.page-section.active { display: flex; flex-direction: column; gap: 16px; }
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+}
+
+/* ===================== HOME SECTION ===================== */
+
+.home-hero {
+  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 60%, #388e3c 100%);
+  border-radius: 16px;
+  padding: 36px 32px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.home-hero .hero-text h1 {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.home-hero .hero-text p {
+  font-size: 14px;
+  opacity: 0.85;
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+.home-hero .hero-icon {
+  font-size: 80px;
+  opacity: 0.25;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.home-quickstats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.qs-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.qs-card .qs-icon { font-size: 22px; }
+.qs-card .qs-num  { font-size: 28px; font-weight: bold; color: #1b5e20; }
+.qs-card .qs-label { font-size: 12px; color: #888; }
+
+.home-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.home-panel {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.home-panel h3 {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.quick-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  color: #111;
+  width: 100%;
+  margin-bottom: 8px;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  text-align: left;
+}
+
+.quick-btn:last-child { margin-bottom: 0; }
+
+.quick-btn:hover {
+  background: #e8f5e9;
+  border-color: #a5d6a7;
+  color: #1b5e20;
+}
+
+.quick-btn .qb-icon { font-size: 18px; flex-shrink: 0; }
+
+.recent-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 13px;
+}
+
+.recent-row:last-child { border-bottom: none; }
+.recent-row .rname { font-weight: bold; }
+.recent-row .rtag {
+  font-size: 11px;
+  background: #e8f5e9;
+  color: #1b5e20;
+  border-radius: 20px;
+  padding: 2px 8px;
+  font-weight: bold;
+}
+
+.ann-preview {
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 13px;
+}
+
+.ann-preview:last-child { border-bottom: none; }
+.ann-preview .ap-title { font-weight: bold; margin-bottom: 3px; }
+.ann-preview .ap-meta { font-size: 11px; color: #888; }
+
+.ap-badge {
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 1px 7px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.home-view-link {
+  font-size: 12px;
+  color: #1b5e20;
+  margin-top: 8px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.home-view-link:hover { text-decoration: underline; }
+
+/* ===================== END HOME ===================== */
+
+/* FORM CARD */
+.form-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.form-card input[type=text],
+.form-card input[type=number] {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+  color: #111;
+}
+
+/* MINISTRY GROUPS */
+.ministry-groups {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.group-box {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.group-box h5 {
+  font-size: 11px;
+  font-weight: bold;
+  color: #666;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.group-box label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  padding: 3px 0;
+  cursor: pointer;
+}
+
+.group-box input[type=checkbox] {
+  accent-color: #1b5e20;
+  width: 13px;
+  height: 13px;
+}
+
+/* BUTTONS */
+.btn-add {
+  width: 100%;
+  padding: 10px;
+  background: #1b5e20;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-add:hover { background: #2e7d32; }
+.btn-add:active { transform: scale(0.98); }
+
+/* SEARCH */
+.search-bar {
+  display: flex;
+  gap: 8px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  color: #111;
+  font-size: 14px;
+}
+
+/* MEMBER GRID */
+.member-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.member-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-left: 4px solid #1b5e20;
+  border-radius: 10px;
+  padding: 14px;
+}
+
+.member-card .mname {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.member-card .mage {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.tag {
+  font-size: 11px;
+  background: #e8f5e9;
+  color: #1b5e20;
+  border-radius: 20px;
+  padding: 2px 8px;
+  font-weight: bold;
+}
+
+.card-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-edit, .btn-del {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.btn-edit {
+  background: #f5f5f5;
+  color: #111;
+  border-color: #ccc;
+}
+
+.btn-edit:hover { background: #e0e0e0; }
+
+.btn-del {
+  background: #fff3f3;
+  color: #c62828;
+  border-color: #f5c6c6;
+}
+
+.btn-del:hover { background: #fde8e8; }
+
+/* EMPTY STATE */
+.empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #888;
+  font-size: 14px;
+  grid-column: 1 / -1;
+}
+
+/* ALERT */
+.alert {
+  background: #fff3e0;
+  color: #e65100;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  display: none;
+  margin-bottom: 8px;
+}
+
+.alert.show { display: block; }
+
+/* EDIT BANNER */
+.editing-banner {
+  background: #e8f5e9;
+  color: #1b5e20;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.editing-banner.show { display: flex; }
+
+.btn-cancel {
+  background: none;
+  border: none;
+  color: #1b5e20;
+  cursor: pointer;
+  font-size: 13px;
+  text-decoration: underline;
+}
+
+/* ===================== ANNOUNCEMENTS ===================== */
+
+.priority-urgent  { background: #fdecea; color: #c62828; border: 1px solid #f5c6c6; }
+.priority-high    { background: #fff3e0; color: #e65100; border: 1px solid #ffe0b2; }
+.priority-normal  { background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9; }
+.priority-low     { background: #f3f4f6; color: #555;    border: 1px solid #ddd; }
+
+.ann-form-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 18px;
+}
+
+.ann-form-card h3 {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 14px;
+  color: #1b5e20;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ann-field {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ann-field label {
+  font-size: 12px;
+  font-weight: bold;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ann-field input[type=text],
+.ann-field input[type=date],
+.ann-field textarea,
+.ann-field select {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #f9f9f9;
+  color: #111;
+  font-family: Arial, sans-serif;
+  resize: vertical;
+}
+
+.ann-field textarea { min-height: 80px; }
+
+.ann-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.ann-filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.ann-filter-bar input[type=text] {
+  flex: 1;
+  min-width: 180px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 14px;
+}
+
+.ann-filter-bar select {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 14px;
+  color: #111;
+}
+
+.ann-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ann-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  transition: box-shadow 0.15s;
+}
+
+.ann-card:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+
+.ann-card.pinned { border-left: 4px solid #f9a825; }
+.ann-card:not(.pinned) { border-left: 4px solid #1b5e20; }
+
+.ann-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ann-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ann-card-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: #111;
+}
+
+.ann-badge {
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
+.ann-pinned-badge {
+  background: #fff8e1;
+  color: #f9a825;
+  border: 1px solid #ffe082;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 2px 8px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.ann-card-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: #888;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.ann-card-meta span {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.ann-card-body {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.ann-card-footer {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.ann-target-tag {
+  font-size: 11px;
+  background: #f3f4f6;
+  color: #444;
+  border-radius: 20px;
+  padding: 2px 8px;
+  border: 1px solid #ddd;
+}
+
+.ann-card-actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.btn-ann-edit {
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  color: #111;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-ann-edit:hover { background: #e0e0e0; }
+
+.btn-ann-del {
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid #f5c6c6;
+  background: #fff3f3;
+  color: #c62828;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-ann-del:hover { background: #fde8e8; }
+
+.btn-ann-pin {
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid #ffe082;
+  background: #fff8e1;
+  color: #f9a825;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-ann-pin:hover { background: #fff3cd; }
+.btn-ann-pin.pinned-active { background: #f9a825; color: #fff; border-color: #f9a825; }
+
+.ann-card.expired { opacity: 0.55; }
+
+.ann-expired-badge {
+  font-size: 11px;
+  background: #f3f4f6;
+  color: #999;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 2px 8px;
+}
+
+.ann-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.ann-stat-box {
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+}
+
+.ann-stat-box .asb-num {
+  font-size: 26px;
+  font-weight: bold;
+  color: #1b5e20;
+}
+
+.ann-stat-box .asb-label {
+  font-size: 12px;
+  color: #888;
+  margin-top: 2px;
+}
+
+.ann-editing-banner {
+  background: #fff8e1;
+  color: #e65100;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.ann-editing-banner.show { display: flex; }
+
+.ann-alert {
+  background: #fff3e0;
+  color: #e65100;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  display: none;
+  margin-bottom: 8px;
+}
+
+.ann-alert.show { display: block; }
+
+.ann-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #888;
+  font-size: 14px;
+}
+
+.ann-target-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ann-target-chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.12s;
+}
+
+.ann-target-chip input[type=checkbox] {
+  accent-color: #1b5e20;
+  width: 13px;
+  height: 13px;
+}
+
+.ann-target-chip:has(input:checked) {
+  background: #e8f5e9;
+  border-color: #a5d6a7;
+  color: #1b5e20;
+  font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="logo-block">
+      <img class="logo-img" src="logo.jpg" alt="LCC Logo" onerror="this.style.display='none'" />
+      <div class="cross"></div>
+      <h2>Light of Life Church</h2>
+      <p>Member Management</p>
+    </div>
+
+    <div class="stat-card">
+      <div class="label">Total members</div>
+      <div class="value" id="totalCount">0</div>
+      <div class="sub" id="totalSub">No members yet</div>
+    </div>
+
+    <div class="stat-card" style="background:#fff8e1;">
+      <div class="label" style="color:#888;">Announcements</div>
+      <div class="value" id="annSideCount" style="color:#1b5e20;">0</div>
+      <div class="sub" id="annSideSub" style="color:#888;">No announcements</div>
+    </div>
+
+    <div class="ministry-stats">
+      <h4>Ministry Breakdown</h4>
+      <div id="ministryStats"><p style="font-size:13px;color:#888">No data yet</p></div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- NAV TABS -->
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="switchTab('home', this)">
+        🏠 Home
+      </button>
+      <button class="nav-tab" onclick="switchTab('members', this)">
+        👥 Members
+      </button>
+      <button class="nav-tab" onclick="switchTab('announcements', this)">
+        📢 Announcements
+      </button>
+    </div>
+
+    <!-- ===================== HOME SECTION ===================== -->
+    <div class="page-section active" id="section-home">
+
+      <!-- Hero Banner -->
+      <div class="home-hero">
+        <div class="hero-text">
+          <h1>Welcome to LCC Monitoring System</h1>
+          <p>Manage your church community — track members across ministries, post announcements, and keep everyone connected.</p>
+        </div>
+        <div class="hero-icon">⛪</div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="home-quickstats">
+        <div class="qs-card">
+          <div class="qs-icon">👥</div>
+          <div class="qs-num" id="homeStatMembers">0</div>
+          <div class="qs-label">Total Members</div>
+        </div>
+        <div class="qs-card">
+          <div class="qs-icon">📢</div>
+          <div class="qs-num" id="homeStatAnn">0</div>
+          <div class="qs-label">Announcements</div>
+        </div>
+        <div class="qs-card">
+          <div class="qs-icon">⛪</div>
+          <div class="qs-num" id="homeStatMinistries">0</div>
+          <div class="qs-label">Ministries</div>
+        </div>
+        <div class="qs-card">
+          <div class="qs-icon">📌</div>
+          <div class="qs-num" id="homeStatPinned">0</div>
+          <div class="qs-label">Pinned Posts</div>
+        </div>
+      </div>
+
+      <!-- Panels Grid -->
+      <div class="home-grid">
+
+        <!-- Quick Actions -->
+        <div class="home-panel">
+          <h3>⚡ Quick Actions</h3>
+          <button class="quick-btn" onclick="switchTab('members', document.querySelectorAll('.nav-tab')[1]); document.getElementById('inp_name').focus();">
+            <span class="qb-icon">➕</span> Add new member
+          </button>
+          <button class="quick-btn" onclick="switchTab('announcements', document.querySelectorAll('.nav-tab')[2]); document.getElementById('ann_title').focus();">
+            <span class="qb-icon">📢</span> Post announcement
+          </button>
+          <button class="quick-btn" onclick="switchTab('members', document.querySelectorAll('.nav-tab')[1]); document.getElementById('searchInp').focus();">
+            <span class="qb-icon">🔍</span> Search members
+          </button>
+          <button class="quick-btn" onclick="switchTab('announcements', document.querySelectorAll('.nav-tab')[2]); document.getElementById('annFilterStatus').value='pinned'; renderAnnouncements();">
+            <span class="qb-icon">📌</span> View pinned posts
+          </button>
+        </div>
+
+        <!-- Recent Members -->
+        <div class="home-panel">
+          <h3>🕐 Recent Members</h3>
+          <div id="homeRecentMembers">
+            <div style="font-size:13px;color:#888;padding:20px 0;text-align:center;">No members yet</div>
+          </div>
+          <span class="home-view-link" onclick="switchTab('members', document.querySelectorAll('.nav-tab')[1])">View all members →</span>
+        </div>
+
+        <!-- Latest Announcements (full width) -->
+        <div class="home-panel" style="grid-column: 1 / -1;">
+          <h3>📢 Latest Announcements</h3>
+          <div id="homeLatestAnn">
+            <div style="font-size:13px;color:#888;padding:20px 0;text-align:center;">No announcements yet</div>
+          </div>
+          <span class="home-view-link" onclick="switchTab('announcements', document.querySelectorAll('.nav-tab')[2])">View all announcements →</span>
+        </div>
+
+      </div>
+    </div>
+    <!-- end home section -->
+
+    <!-- =================== MEMBERS SECTION =================== -->
+    <div class="page-section" id="section-members">
+
+      <div class="form-card">
+        <div id="alertBox" class="alert"></div>
+        <div id="editBanner" class="editing-banner">
+          <span>✏️ Editing member — make changes and click "Save member"</span>
+          <button class="btn-cancel" onclick="cancelEdit()">Cancel</button>
+        </div>
+
+        <div class="form-row">
+          <input type="text" id="inp_name" placeholder="Full name" />
+          <input type="number" id="inp_age" placeholder="Age" min="1" max="120" />
+        </div>
+
+        <div class="ministry-groups">
+          <div class="group-box">
+            <h5>Worship & Music</h5>
+            <label><input type="checkbox" value="Praise and Worship"> Praise & Worship</label>
+            <label><input type="checkbox" value="Lyrics Creator"> Lyrics Creator</label>
+          </div>
+          <div class="group-box">
+            <h5>Youth & Community</h5>
+            <label><input type="checkbox" value="Youth Ministry"> Youth Ministry</label>
+            <label><input type="checkbox" value="Youth"> Youth</label>
+            <label><input type="checkbox" value="Kid"> Kid</label>
+            <label><input type="checkbox" value="Member"> Member</label>
+            <label><input type="checkbox" value="Visitor"> Visitor</label>
+          </div>
+          <div class="group-box">
+            <h5>Leaders & Volunteers</h5>
+            <label><input type="checkbox" value="Head Pastor"> Head Pastor</label>
+            <label><input type="checkbox" value="Pastor"> Pastor</label>
+            <label><input type="checkbox" value="Secretary"> Secretary</label>
+            <label><input type="checkbox" value="Council Member"> Council Member</label>
+          </div>
+          <div class="group-box">
+            <h5>Service Teams</h5>
+            <label><input type="checkbox" value="Media Team"> Media Team</label>
+            <label><input type="checkbox" value="Ushering Team"> Ushering Team</label>
+            <label><input type="checkbox" value="Intercessory Prayer"> Prayer Warrior</label>
+            <label><input type="checkbox" value="Floor Man"> Floor Man</label>
+          </div>
+        </div>
+
+        <button class="btn-add" onclick="submitForm()">
+          ＋ <span id="btnLabel">Add member</span>
+        </button>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" id="searchInp" placeholder="Search members by name or ministry..." oninput="renderMembers()" />
+      </div>
+
+      <div class="member-grid" id="memberGrid"></div>
+    </div>
+
+    <!-- ================= ANNOUNCEMENTS SECTION ================= -->
+    <div class="page-section" id="section-announcements">
+
+      <div class="ann-stats-row">
+        <div class="ann-stat-box">
+          <div class="asb-num" id="annStatTotal">0</div>
+          <div class="asb-label">Total</div>
+        </div>
+        <div class="ann-stat-box">
+          <div class="asb-num" id="annStatActive" style="color:#1b5e20;">0</div>
+          <div class="asb-label">Active</div>
+        </div>
+        <div class="ann-stat-box">
+          <div class="asb-num" id="annStatPinned" style="color:#f9a825;">0</div>
+          <div class="asb-label">Pinned</div>
+        </div>
+        <div class="ann-stat-box">
+          <div class="asb-num" id="annStatExpired" style="color:#aaa;">0</div>
+          <div class="asb-label">Expired</div>
+        </div>
+      </div>
+
+      <div class="ann-form-card">
+        <h3>📢 <span id="annFormTitle">New Announcement</span></h3>
+
+        <div id="annAlertBox" class="ann-alert"></div>
+        <div id="annEditBanner" class="ann-editing-banner">
+          <span>✏️ Editing announcement — update and click "Post Announcement"</span>
+          <button class="btn-cancel" onclick="cancelAnnEdit()">Cancel</button>
+        </div>
+
+        <div class="ann-field">
+          <label>Title</label>
+          <input type="text" id="ann_title" placeholder="Announcement title..." />
+        </div>
+
+        <div class="ann-field">
+          <label>Message</label>
+          <textarea id="ann_body" placeholder="Write your announcement here..."></textarea>
+        </div>
+
+        <div class="ann-form-row">
+          <div class="ann-field">
+            <label>Priority</label>
+            <select id="ann_priority">
+              <option value="normal">🟢 Normal</option>
+              <option value="high">🟠 High</option>
+              <option value="urgent">🔴 Urgent</option>
+              <option value="low">⚪ Low</option>
+            </select>
+          </div>
+          <div class="ann-field">
+            <label>Category</label>
+            <select id="ann_category">
+              <option value="General">General</option>
+              <option value="Event">Event</option>
+              <option value="Prayer">Prayer</option>
+              <option value="Service">Service</option>
+              <option value="Reminder">Reminder</option>
+              <option value="Urgent Notice">Urgent Notice</option>
+            </select>
+          </div>
+          <div class="ann-field">
+            <label>Expiry Date (optional)</label>
+            <input type="date" id="ann_expiry" />
+          </div>
+        </div>
+
+        <div class="ann-field">
+          <label>Target Audience (leave all unchecked = Everyone)</label>
+          <div class="ann-target-grid" id="annTargetGrid"></div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:4px; align-items:center;">
+          <label style="display:flex;align-items:center;gap:6px;font-size:14px;cursor:pointer;">
+            <input type="checkbox" id="ann_pin" style="accent-color:#f9a825;width:15px;height:15px;">
+            📌 Pin this announcement
+          </label>
+        </div>
+
+        <button class="btn-add" style="margin-top:12px;" onclick="submitAnnouncement()">
+          📢 <span id="annBtnLabel">Post Announcement</span>
+        </button>
+      </div>
+
+      <div class="ann-filter-bar">
+        <input type="text" id="annSearchInp" placeholder="Search announcements..." oninput="renderAnnouncements()" />
+        <select id="annFilterPriority" onchange="renderAnnouncements()">
+          <option value="">All Priorities</option>
+          <option value="urgent">🔴 Urgent</option>
+          <option value="high">🟠 High</option>
+          <option value="normal">🟢 Normal</option>
+          <option value="low">⚪ Low</option>
+        </select>
+        <select id="annFilterCategory" onchange="renderAnnouncements()">
+          <option value="">All Categories</option>
+          <option value="General">General</option>
+          <option value="Event">Event</option>
+          <option value="Prayer">Prayer</option>
+          <option value="Service">Service</option>
+          <option value="Reminder">Reminder</option>
+          <option value="Urgent Notice">Urgent Notice</option>
+        </select>
+        <select id="annFilterStatus" onchange="renderAnnouncements()">
+          <option value="">All</option>
+          <option value="active">Active</option>
+          <option value="expired">Expired</option>
+          <option value="pinned">Pinned</option>
+        </select>
+      </div>
+
+      <div class="ann-list" id="annList"></div>
+
+    </div>
+    <!-- end announcements section -->
+
+  </div>
+</div>
+
+<script>
+// ============================================================
+//  DATA
+// ============================================================
+let members       = JSON.parse(localStorage.getItem('lcc_members'))       || [];
+let announcements = JSON.parse(localStorage.getItem('lcc_announcements')) || [];
+let editingId     = null;
+let annEditingId  = null;
+
+// ============================================================
+//  HELPERS
+// ============================================================
+function save() {
+  localStorage.setItem('lcc_members', JSON.stringify(members));
+}
+
+function saveAnn() {
+  localStorage.setItem('lcc_announcements', JSON.stringify(announcements));
+}
+
+function showAlert(msg) {
+  const el = document.getElementById('alertBox');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+function showAnnAlert(msg) {
+  const el = document.getElementById('annAlertBox');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+function isExpired(dateStr) {
+  if (!dateStr) return false;
+  const expiry = new Date(dateStr);
+  expiry.setHours(23, 59, 59, 999);
+  return expiry < new Date();
+}
+
+function formatDate(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function priorityLabel(p) {
+  return { urgent: '🔴 Urgent', high: '🟠 High', normal: '🟢 Normal', low: '⚪ Low' }[p] || p;
+}
+
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+// ============================================================
+//  TAB SWITCHING
+// ============================================================
+function switchTab(tab, btn) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('section-' + tab).classList.add('active');
+  if (tab === 'home') renderHome();
+}
+
+// ============================================================
+//  HOME
+// ============================================================
+function renderHome() {
+  // Quick stats
+  document.getElementById('homeStatMembers').textContent = members.length;
+  document.getElementById('homeStatAnn').textContent     = announcements.length;
+  document.getElementById('homeStatPinned').textContent  = announcements.filter(a => a.pinned).length;
+
+  // Count unique ministries
+  const allMin = new Set();
+  members.forEach(m => m.ministries.forEach(min => allMin.add(min)));
+  document.getElementById('homeStatMinistries').textContent = allMin.size;
+
+  // Recent members (last 5 added)
+  const recentBox = document.getElementById('homeRecentMembers');
+  if (members.length === 0) {
+    recentBox.innerHTML = '<div style="font-size:13px;color:#888;padding:20px 0;text-align:center;">No members yet</div>';
+  } else {
+    const recent = [...members].slice(-5).reverse();
+    recentBox.innerHTML = recent.map(m =>
+      `<div class="recent-row">
+        <div>
+          <div class="rname">${escHtml(m.name)}</div>
+          <div style="font-size:11px;color:#888">Age ${m.age}</div>
+        </div>
+        <span class="rtag">${escHtml(m.ministries[0] || '')}</span>
+      </div>`
+    ).join('');
+  }
+
+  // Latest announcements (top 3)
+  const annBox = document.getElementById('homeLatestAnn');
+  if (announcements.length === 0) {
+    annBox.innerHTML = '<div style="font-size:13px;color:#888;padding:20px 0;text-align:center;">No announcements yet</div>';
+  } else {
+    const pClass = { urgent:'priority-urgent', high:'priority-high', normal:'priority-normal', low:'priority-low' };
+    const top = [...announcements]
+      .sort((a,b) => {
+        if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      })
+      .slice(0, 3);
+    annBox.innerHTML = top.map(a =>
+      `<div class="ann-preview">
+        <div class="ap-title">
+          ${a.pinned ? '📌 ' : ''}${escHtml(a.title)}
+          <span class="ap-badge ${pClass[a.priority] || ''}">${priorityLabel(a.priority)}</span>
+        </div>
+        <div class="ap-meta">📅 ${formatDate(a.createdAt)} · For: ${a.targets.join(', ')}</div>
+      </div>`
+    ).join('');
+  }
+}
+
+// ============================================================
+//  MEMBERS
+// ============================================================
+function submitForm() {
+  const name       = document.getElementById('inp_name').value.trim();
+  const age        = document.getElementById('inp_age').value.trim();
+  const ministries = [...document.querySelectorAll('.ministry-groups input:checked')].map(c => c.value);
+
+  if (!name)                                      { showAlert('Please enter a full name.'); return; }
+  if (!age || isNaN(age) || age < 1 || age > 120) { showAlert('Please enter a valid age (1–120).'); return; }
+  if (ministries.length === 0)                    { showAlert('Please select at least one ministry or group.'); return; }
+
+  if (editingId !== null) {
+    const idx = members.findIndex(m => m.id === editingId);
+    if (idx > -1) members[idx] = { id: editingId, name, age: parseInt(age), ministries };
+    editingId = null;
+    document.getElementById('editBanner').classList.remove('show');
+    document.getElementById('btnLabel').textContent = 'Add member';
+  } else {
+    members.push({ id: Date.now(), name, age: parseInt(age), ministries });
+  }
+
+  save();
+  clearForm();
+  render();
+}
+
+function editMember(id) {
+  const m = members.find(x => x.id === id);
+  if (!m) return;
+  editingId = id;
+  document.getElementById('inp_name').value = m.name;
+  document.getElementById('inp_age').value  = m.age;
+  document.querySelectorAll('.ministry-groups input[type=checkbox]').forEach(c => {
+    c.checked = m.ministries.includes(c.value);
+  });
+  document.getElementById('editBanner').classList.add('show');
+  document.getElementById('btnLabel').textContent = 'Save member';
+  document.getElementById('inp_name').focus();
+  switchTab('members', document.querySelectorAll('.nav-tab')[1]);
+}
+
+function cancelEdit() {
+  editingId = null;
+  clearForm();
+  document.getElementById('editBanner').classList.remove('show');
+  document.getElementById('btnLabel').textContent = 'Add member';
+}
+
+function deleteMember(id) {
+  const m = members.find(x => x.id === id);
+  if (!m) return;
+  if (!confirm('Remove ' + m.name + ' from the member list?')) return;
+  members = members.filter(x => x.id !== id);
+  if (editingId === id) cancelEdit();
+  save();
+  render();
+}
+
+function clearForm() {
+  document.getElementById('inp_name').value = '';
+  document.getElementById('inp_age').value  = '';
+  document.querySelectorAll('.ministry-groups input[type=checkbox]').forEach(c => c.checked = false);
+}
+
+// ============================================================
+//  ANNOUNCEMENTS
+// ============================================================
+const ALL_MINISTRIES = [
+  'Everyone',
+  'Praise and Worship', 'Lyrics Creator',
+  'Youth Ministry', 'Youth', 'Kid', 'Member', 'Visitor',
+  'Head Pastor', 'Pastor', 'Secretary', 'Council Member',
+  'Media Team', 'Ushering Team', 'Intercessory Prayer', 'Floor Man'
+];
+
+function buildTargetGrid() {
+  const grid = document.getElementById('annTargetGrid');
+  grid.innerHTML = ALL_MINISTRIES.map(m =>
+    `<label class="ann-target-chip">
+      <input type="checkbox" value="${m}" class="ann-target-cb"> ${m}
+    </label>`
+  ).join('');
+}
+
+function getCheckedTargets() {
+  return [...document.querySelectorAll('.ann-target-cb:checked')].map(c => c.value);
+}
+
+function submitAnnouncement() {
+  const title    = document.getElementById('ann_title').value.trim();
+  const body     = document.getElementById('ann_body').value.trim();
+  const priority = document.getElementById('ann_priority').value;
+  const category = document.getElementById('ann_category').value;
+  const expiry   = document.getElementById('ann_expiry').value;
+  const pinned   = document.getElementById('ann_pin').checked;
+  const targets  = getCheckedTargets();
+
+  if (!title) { showAnnAlert('Please enter an announcement title.'); return; }
+  if (!body)  { showAnnAlert('Please write a message for the announcement.'); return; }
+
+  const finalTargets = targets.length === 0 ? ['Everyone'] : targets;
+
+  if (annEditingId !== null) {
+    const idx = announcements.findIndex(a => a.id === annEditingId);
+    if (idx > -1) {
+      announcements[idx] = {
+        ...announcements[idx],
+        title, body, priority, category, expiry, pinned,
+        targets: finalTargets,
+        updatedAt: new Date().toISOString()
+      };
+    }
+    annEditingId = null;
+    document.getElementById('annEditBanner').classList.remove('show');
+    document.getElementById('annBtnLabel').textContent = 'Post Announcement';
+    document.getElementById('annFormTitle').textContent = 'New Announcement';
+  } else {
+    announcements.unshift({
+      id: Date.now(),
+      title, body, priority, category,
+      expiry, pinned,
+      targets: finalTargets,
+      createdAt: new Date().toISOString(),
+      updatedAt: null
+    });
+  }
+
+  saveAnn();
+  clearAnnForm();
+  renderAnnouncements();
+  renderAnnStats();
+  renderSidebarAnnCount();
+}
+
+function editAnnouncement(id) {
+  const a = announcements.find(x => x.id === id);
+  if (!a) return;
+  annEditingId = id;
+  document.getElementById('ann_title').value    = a.title;
+  document.getElementById('ann_body').value     = a.body;
+  document.getElementById('ann_priority').value = a.priority;
+  document.getElementById('ann_category').value = a.category;
+  document.getElementById('ann_expiry').value   = a.expiry || '';
+  document.getElementById('ann_pin').checked    = a.pinned;
+  document.querySelectorAll('.ann-target-cb').forEach(c => {
+    c.checked = a.targets.includes(c.value);
+  });
+  document.getElementById('annEditBanner').classList.add('show');
+  document.getElementById('annBtnLabel').textContent = 'Save Announcement';
+  document.getElementById('annFormTitle').textContent = 'Edit Announcement';
+  document.getElementById('ann_title').focus();
+  document.getElementById('annAlertBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function cancelAnnEdit() {
+  annEditingId = null;
+  clearAnnForm();
+  document.getElementById('annEditBanner').classList.remove('show');
+  document.getElementById('annBtnLabel').textContent = 'Post Announcement';
+  document.getElementById('annFormTitle').textContent = 'New Announcement';
+}
+
+function deleteAnnouncement(id) {
+  const a = announcements.find(x => x.id === id);
+  if (!a) return;
+  if (!confirm('Delete the announcement "' + a.title + '"?')) return;
+  announcements = announcements.filter(x => x.id !== id);
+  if (annEditingId === id) cancelAnnEdit();
+  saveAnn();
+  renderAnnouncements();
+  renderAnnStats();
+  renderSidebarAnnCount();
+}
+
+function togglePin(id) {
+  const idx = announcements.findIndex(x => x.id === id);
+  if (idx === -1) return;
+  announcements[idx].pinned = !announcements[idx].pinned;
+  saveAnn();
+  renderAnnouncements();
+  renderAnnStats();
+}
+
+function clearAnnForm() {
+  document.getElementById('ann_title').value    = '';
+  document.getElementById('ann_body').value     = '';
+  document.getElementById('ann_priority').value = 'normal';
+  document.getElementById('ann_category').value = 'General';
+  document.getElementById('ann_expiry').value   = '';
+  document.getElementById('ann_pin').checked    = false;
+  document.querySelectorAll('.ann-target-cb').forEach(c => c.checked = false);
+}
+
+function renderAnnouncements() {
+  const q         = document.getElementById('annSearchInp').value.toLowerCase();
+  const fPriority = document.getElementById('annFilterPriority').value;
+  const fCategory = document.getElementById('annFilterCategory').value;
+  const fStatus   = document.getElementById('annFilterStatus').value;
+  const list      = document.getElementById('annList');
+
+  let sorted = [...announcements].sort((a, b) => {
+    if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
+    return new Date(b.createdAt) - new Date(a.createdAt);
+  });
+
+  let filtered = sorted.filter(a => {
+    const exp = isExpired(a.expiry);
+    if (q && !a.title.toLowerCase().includes(q) && !a.body.toLowerCase().includes(q) &&
+        !a.category.toLowerCase().includes(q)) return false;
+    if (fPriority && a.priority !== fPriority) return false;
+    if (fCategory && a.category !== fCategory) return false;
+    if (fStatus === 'active'  && exp)       return false;
+    if (fStatus === 'expired' && !exp)      return false;
+    if (fStatus === 'pinned'  && !a.pinned) return false;
+    return true;
+  });
+
+  if (announcements.length === 0) {
+    list.innerHTML = '<div class="ann-empty">📢 No announcements yet. Create your first one above.</div>';
+    return;
+  }
+
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="ann-empty">No announcements match your filters.</div>';
+    return;
+  }
+
+  const priorityClass = { urgent: 'priority-urgent', high: 'priority-high', normal: 'priority-normal', low: 'priority-low' };
+
+  list.innerHTML = filtered.map(a => {
+    const exp = isExpired(a.expiry);
+    return `
+      <div class="ann-card ${a.pinned ? 'pinned' : ''} ${exp ? 'expired' : ''}">
+        <div class="ann-card-header">
+          <div>
+            <div class="ann-title-row">
+              ${a.pinned ? '<span class="ann-pinned-badge">📌 Pinned</span>' : ''}
+              <span class="ann-card-title">${escHtml(a.title)}</span>
+              <span class="ann-badge ${priorityClass[a.priority] || ''}">${priorityLabel(a.priority)}</span>
+              <span class="ann-badge" style="background:#f3f4f6;color:#555;border:1px solid #ddd;">${escHtml(a.category)}</span>
+              ${exp ? '<span class="ann-expired-badge">Expired</span>' : ''}
+            </div>
+            <div class="ann-card-meta" style="margin-top:4px;">
+              <span>📅 Posted: ${formatDate(a.createdAt)}</span>
+              ${a.expiry ? `<span>⏳ Expires: ${formatDate(a.expiry)}</span>` : ''}
+              ${a.updatedAt ? `<span>✏️ Edited: ${formatDate(a.updatedAt)}</span>` : ''}
+            </div>
+          </div>
+        </div>
+        <div class="ann-card-body">${escHtml(a.body)}</div>
+        <div class="ann-card-footer">
+          <span style="font-size:12px;color:#888;margin-right:4px;">👥 For:</span>
+          ${a.targets.map(t => `<span class="ann-target-tag">${escHtml(t)}</span>`).join('')}
+        </div>
+        <div class="ann-card-actions">
+          <button class="btn-ann-edit" onclick="editAnnouncement(${a.id})">✏️ Edit</button>
+          <button class="btn-ann-pin ${a.pinned ? 'pinned-active' : ''}" onclick="togglePin(${a.id})">
+            📌 ${a.pinned ? 'Unpin' : 'Pin'}
+          </button>
+          <button class="btn-ann-del" onclick="deleteAnnouncement(${a.id})">🗑 Delete</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderAnnStats() {
+  const total   = announcements.length;
+  const pinned  = announcements.filter(a => a.pinned).length;
+  const expired = announcements.filter(a => isExpired(a.expiry)).length;
+  const active  = total - expired;
+  document.getElementById('annStatTotal').textContent   = total;
+  document.getElementById('annStatActive').textContent  = active;
+  document.getElementById('annStatPinned').textContent  = pinned;
+  document.getElementById('annStatExpired').textContent = expired;
+}
+
+function renderSidebarAnnCount() {
+  const total  = announcements.length;
+  const active = announcements.filter(a => !isExpired(a.expiry)).length;
+  document.getElementById('annSideCount').textContent = total;
+  document.getElementById('annSideSub').textContent   =
+    total === 0 ? 'No announcements' :
+    active + ' active / ' + (total - active) + ' expired';
+}
+
+// ============================================================
+//  MEMBERS RENDER
+// ============================================================
+function render() {
+  renderStats();
+  renderMembers();
+}
+
+function renderStats() {
+  document.getElementById('totalCount').textContent = members.length;
+  document.getElementById('totalSub').textContent =
+    members.length === 1 ? '1 registered member' : members.length + ' registered members';
+
+  const count = {};
+  members.forEach(m => m.ministries.forEach(min => { count[min] = (count[min] || 0) + 1; }));
+  const box  = document.getElementById('ministryStats');
+  const keys = Object.keys(count);
+
+  if (keys.length === 0) {
+    box.innerHTML = '<p style="font-size:13px;color:#888">No data yet</p>';
+    return;
+  }
+
+  box.innerHTML = keys
+    .sort((a, b) => count[b] - count[a])
+    .map(k =>
+      '<div class="min-row"><span>' + k + '</span><span class="min-badge">' + count[k] + '</span></div>'
+    ).join('');
+}
+
+function renderMembers() {
+  const q    = document.getElementById('searchInp').value.toLowerCase();
+  const grid = document.getElementById('memberGrid');
+
+  const filtered = members.filter(m =>
+    m.name.toLowerCase().includes(q) ||
+    m.ministries.some(min => min.toLowerCase().includes(q))
+  );
+
+  if (members.length === 0) {
+    grid.innerHTML = '<div class="empty">⛪ No members yet. Add your first member above.</div>';
+    return;
+  }
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="empty">No members match your search.</div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(m =>
+    '<div class="member-card">' +
+      '<div class="mname">' + escHtml(m.name) + '</div>' +
+      '<div class="mage">Age ' + m.age + '</div>' +
+      '<div class="tags">' + m.ministries.map(min => '<span class="tag">' + escHtml(min) + '</span>').join('') + '</div>' +
+      '<div class="card-actions">' +
+        '<button class="btn-edit" onclick="editMember(' + m.id + ')">✏️ Edit</button>' +
+        '<button class="btn-del"  onclick="deleteMember(' + m.id + ')">🗑 Delete</button>' +
+      '</div>' +
+    '</div>'
+  ).join('');
+}
+
+// ============================================================
+//  INIT
+// ============================================================
+buildTargetGrid();
+render();
+renderAnnouncements();
+renderAnnStats();
+renderSidebarAnnCount();
+renderHome();
+</script>
+
+</body>
+</html>
